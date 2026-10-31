@@ -29,13 +29,15 @@ std::string escape(const std::string& s) {
     return out;
 }
 
-// "Nice" linear tick positions covering [lo, hi].
-std::vector<double> linearTicks(double lo, double hi, int target = 6) {
+// "Nice" linear tick positions covering [lo, hi]. Integer data (e.g. worker
+// counts) never gets fractional ticks.
+std::vector<double> linearTicks(double lo, double hi, bool integerData = false, int target = 6) {
     const double span = hi - lo;
     const double raw = span / target;
     const double magnitude = std::pow(10.0, std::floor(std::log10(raw)));
     const double residual = raw / magnitude;
-    const double step = magnitude * (residual > 5 ? 10 : residual > 2 ? 5 : residual > 1 ? 2 : 1);
+    double step = magnitude * (residual > 5 ? 10 : residual > 2 ? 5 : residual > 1 ? 2 : 1);
+    if (integerData) step = std::max(step, 1.0);
     std::vector<double> ticks;
     for (double t = std::ceil(lo / step) * step; t <= hi + step * 1e-9; t += step) {
         ticks.push_back(std::abs(t) < step * 1e-9 ? 0.0 : t);
@@ -46,6 +48,7 @@ std::vector<double> linearTicks(double lo, double hi, int target = 6) {
 struct Axis {
     double lo = 0, hi = 1;
     bool log = false;
+    bool integer = false;
     double map(double v, double p0, double p1) const {
         const double a = log ? std::log10(lo) : lo;
         const double b = log ? std::log10(hi) : hi;
@@ -53,9 +56,11 @@ struct Axis {
         return p0 + t * (p1 - p0);
     }
     std::vector<double> ticks() const {
-        if (!log) return linearTicks(lo, hi);
+        if (!log) return linearTicks(lo, hi, integer);
         std::vector<double> t;
-        for (double e = std::floor(std::log10(lo)); e <= std::ceil(std::log10(hi)); ++e) {
+        const double first = std::floor(std::log10(lo)), last = std::ceil(std::log10(hi));
+        const double stride = std::max(1.0, std::ceil((last - first) / 8.0)); // at most ~9 labels
+        for (double e = first; e <= last; e += stride) {
             const double v = std::pow(10.0, e);
             if (v >= lo * 0.999 && v <= hi * 1.001) t.push_back(v);
         }
@@ -65,15 +70,18 @@ struct Axis {
 
 Axis fitAxis(const std::vector<Series>& series, bool useX, bool log) {
     double lo = std::numeric_limits<double>::infinity(), hi = -lo;
+    bool integer = true;
     for (const auto& s : series) {
         for (double v : useX ? s.x : s.y) {
             if (log && v <= 0) continue;
+            integer = integer && std::floor(v) == v;
             lo = std::min(lo, v);
             hi = std::max(hi, v);
         }
     }
     Axis a;
     a.log = log;
+    a.integer = integer;
     if (!std::isfinite(lo)) { lo = 0; hi = 1; }
     if (log) {
         a.lo = std::pow(10.0, std::floor(std::log10(lo)));
@@ -81,7 +89,7 @@ Axis fitAxis(const std::vector<Series>& series, bool useX, bool log) {
         if (a.lo == a.hi) a.hi *= 10;
     } else {
         if (hi == lo) { hi += 1; lo -= 1; }
-        const auto ticks = linearTicks(lo, hi);
+        const auto ticks = linearTicks(lo, hi, integer);
         const double step = ticks.size() > 1 ? ticks[1] - ticks[0] : (hi - lo);
         a.lo = std::floor(lo / step) * step;
         a.hi = std::ceil(hi / step) * step;

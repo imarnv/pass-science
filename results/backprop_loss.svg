@@ -1,0 +1,37 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='820' height='500' viewBox='0 0 820 500' font-family='Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#ffffff'/>
+<text x='84' y='34' font-size='19' font-weight='600' fill='#1d1d1f'>Training loss</text>
+<text x='84' y='56' font-size='13' fill='#6e6e73'>100 gradient-descent steps after the first update, learning rate 0.1, x = 1, y = 2</text>
+<line x1='84' y1='74' x2='84' y2='436' stroke='#e5e5ea'/>
+<text x='84' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>0</text>
+<line x1='193.2' y1='74' x2='193.2' y2='436' stroke='#e5e5ea'/>
+<text x='193.2' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>20</text>
+<line x1='302.4' y1='74' x2='302.4' y2='436' stroke='#e5e5ea'/>
+<text x='302.4' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>40</text>
+<line x1='411.6' y1='74' x2='411.6' y2='436' stroke='#e5e5ea'/>
+<text x='411.6' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>60</text>
+<line x1='520.8' y1='74' x2='520.8' y2='436' stroke='#e5e5ea'/>
+<text x='520.8' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>80</text>
+<line x1='630' y1='74' x2='630' y2='436' stroke='#e5e5ea'/>
+<text x='630' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>100</text>
+<line x1='84' y1='436' x2='630' y2='436' stroke='#e5e5ea'/>
+<text x='74' y='440' font-size='12' fill='#6e6e73' text-anchor='end'>1e-20</text>
+<line x1='84' y1='381.7' x2='630' y2='381.7' stroke='#e5e5ea'/>
+<text x='74' y='385.7' font-size='12' fill='#6e6e73' text-anchor='end'>1e-17</text>
+<line x1='84' y1='327.4' x2='630' y2='327.4' stroke='#e5e5ea'/>
+<text x='74' y='331.4' font-size='12' fill='#6e6e73' text-anchor='end'>1e-14</text>
+<line x1='84' y1='273.1' x2='630' y2='273.1' stroke='#e5e5ea'/>
+<text x='74' y='277.1' font-size='12' fill='#6e6e73' text-anchor='end'>1e-11</text>
+<line x1='84' y1='218.8' x2='630' y2='218.8' stroke='#e5e5ea'/>
+<text x='74' y='222.8' font-size='12' fill='#6e6e73' text-anchor='end'>1e-08</text>
+<line x1='84' y1='164.5' x2='630' y2='164.5' stroke='#e5e5ea'/>
+<text x='74' y='168.5' font-size='12' fill='#6e6e73' text-anchor='end'>1e-05</text>
+<line x1='84' y1='110.2' x2='630' y2='110.2' stroke='#e5e5ea'/>
+<text x='74' y='114.2' font-size='12' fill='#6e6e73' text-anchor='end'>0.01</text>
+<rect x='84' y='74' width='546' height='362' fill='none' stroke='#c7c7cc'/>
+<text x='357' y='482' font-size='13' fill='#1d1d1f' text-anchor='middle'>Step after first update [-]</text>
+<text transform='translate(22 255) rotate(-90)' font-size='13' fill='#1d1d1f' text-anchor='middle'>Loss J [-] (log scale)</text>
+<polyline fill='none' stroke='#0a84ff' stroke-width='2' points='84.00,76.97 89.46,80.88 94.92,84.65 100.38,88.34 105.84,92.00 111.30,95.63 116.76,99.24 122.22,102.85 127.68,106.44 133.14,110.04 138.60,113.62 144.06,117.21 149.52,120.79 154.98,124.37 160.44,127.95 165.90,131.53 171.36,135.11 176.82,138.69 182.28,142.26 187.74,145.84 193.20,149.41 198.66,152.99 204.12,156.56 209.58,160.14 215.04,163.72 220.50,167.29 225.96,170.87 231.42,174.44 236.88,178.01 242.34,181.59 247.80,185.16 253.26,188.74 258.72,192.31 264.18,195.89 269.64,199.46 275.10,203.04 280.56,206.61 286.02,210.19 291.48,213.76 296.94,217.34 302.40,220.91 307.86,224.49 313.32,228.06 318.78,231.64 324.24,235.21 329.70,238.78 335.16,242.36 340.62,245.93 346.08,249.51 351.54,253.08 357.00,256.66 362.46,260.23 367.92,263.81 373.38,267.38 378.84,270.96 384.30,274.53 389.76,278.11 395.22,281.68 400.68,285.26 406.14,288.83 411.60,292.40 417.06,295.98 422.52,299.55 427.98,303.13 433.44,306.70 438.90,310.28 444.36,313.85 449.82,317.43 455.28,321.00 460.74,324.58 466.20,328.15 471.66,331.73 477.12,335.30 482.58,338.88 488.04,342.45 493.50,346.02 498.96,349.60 504.42,353.17 509.88,356.75 515.34,360.32 520.80,363.90 526.26,367.47 531.72,371.05 537.18,374.62 542.64,378.20 548.10,381.77 553.56,385.35 559.02,388.92 564.48,392.50 569.94,396.07 575.40,399.64 580.86,403.22 586.32,406.79 591.78,410.37 597.24,413.94 602.70,417.52 608.16,421.09 613.62,424.67 619.08,428.24 624.54,431.82 630.00,435.39 '/>
+<line x1='650' y1='84' x2='674' y2='84' stroke='#0a84ff' stroke-width='2'/>
+<text x='682' y='88' font-size='12' fill='#1d1d1f'>J = 0.5 (y_hat - y)^2</text>
+</svg>

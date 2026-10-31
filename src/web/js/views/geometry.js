@@ -4,6 +4,13 @@ import { api, decodeBase64 } from "../api.js";
 import { bytes, enableDrop, escapeHtml, fmt, kv, readFileText, reportError, setStatus, toast } from "../ui.js";
 import { THREE, Viewer3D } from "../viewer3d.js";
 
+const EDGE_LIMIT = 150000; // triangles
+
+function buildEdges(geometry) {
+  return new THREE.LineSegments(new THREE.EdgesGeometry(geometry, 30),
+    new THREE.LineBasicMaterial({ color: 0x3a3a3c, transparent: true, opacity: 0.55 }));
+}
+
 export function initGeometry() {
   const container = document.getElementById("geo-viewer");
   const fileInput = document.getElementById("geo-file");
@@ -19,6 +26,9 @@ export function initGeometry() {
       const result = await api.postText("/api/geometry/stl", text);
       show(name, result);
       setStatus(`Loaded ${name}: ${result.triangles.toLocaleString()} triangles parsed in ${result.parseMs.toFixed(1)} ms.`, "ok");
+      if (result.triangles > EDGE_LIMIT) {
+        toast("Large mesh", `Feature edges are off for meshes above ${EDGE_LIMIT.toLocaleString()} triangles. Use Edges to turn them on.`, "info", 6000);
+      }
       if (result.degenerateTriangles) {
         toast("Degenerate triangles", `${result.degenerateTriangles} zero-area facets were kept but have no normal.`, "warning");
       }
@@ -43,11 +53,14 @@ export function initGeometry() {
       color: 0xb8bec8, metalness: 0.15, roughness: 0.55, side: THREE.DoubleSide,
       polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
     }));
-    edges = new THREE.LineSegments(new THREE.EdgesGeometry(geometry, 30), new THREE.LineBasicMaterial({ color: 0x3a3a3c, transparent: true, opacity: 0.55 }));
-    edges.visible = toolbar.querySelector('[data-act="edges"]').getAttribute("aria-pressed") === "true";
+    // Feature-edge extraction is O(triangles) in JavaScript; skip it for very
+    // large meshes so they open quickly (the toggle can still request it).
+    const edgeButton = toolbar.querySelector('[data-act="edges"]');
+    if (data.triangles > EDGE_LIMIT) edgeButton.setAttribute("aria-pressed", "false");
+    edges = edgeButton.getAttribute("aria-pressed") === "true" ? buildEdges(geometry) : null;
     mesh.material.wireframe = toolbar.querySelector('[data-act="wire"]').getAttribute("aria-pressed") === "true";
     v.add(mesh);
-    v.add(edges);
+    if (edges) v.add(edges);
     v.setAxesVisible(toolbar.querySelector('[data-act="axes"]').getAttribute("aria-pressed") === "true");
     v.view("iso");
     current = { name, data };
@@ -107,7 +120,10 @@ export function initGeometry() {
       const on = btn.getAttribute("aria-pressed") !== "true";
       btn.setAttribute("aria-pressed", String(on));
       if (act === "wire" && mesh) mesh.material.wireframe = on;
-      if (act === "edges" && edges) edges.visible = on;
+      if (act === "edges" && mesh) {
+        if (on && !edges) { edges = buildEdges(mesh.geometry); viewer.content.add(edges); }
+        if (edges) edges.visible = on;
+      }
       if (act === "axes") viewer.setAxesVisible(on);
     }
   });

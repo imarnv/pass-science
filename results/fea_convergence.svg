@@ -1,0 +1,30 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='820' height='500' viewBox='0 0 820 500' font-family='Helvetica, Arial, sans-serif'>
+<rect width='100%' height='100%' fill='#ffffff'/>
+<text x='84' y='34' font-size='19' font-weight='600' fill='#1d1d1f'>Mesh convergence</text>
+<text x='84' y='56' font-size='13' fill='#6e6e73'>Maximum absolute error at element midpoints (FE interpolation); slope 2 expected</text>
+<line x1='84' y1='74' x2='84' y2='436' stroke='#e5e5ea'/>
+<text x='84' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>0.01</text>
+<line x1='630' y1='74' x2='630' y2='436' stroke='#e5e5ea'/>
+<text x='630' y='456' font-size='12' fill='#6e6e73' text-anchor='middle'>0.1</text>
+<line x1='84' y1='436' x2='630' y2='436' stroke='#e5e5ea'/>
+<text x='74' y='440' font-size='12' fill='#6e6e73' text-anchor='end'>0.01</text>
+<line x1='84' y1='315.3' x2='630' y2='315.3' stroke='#e5e5ea'/>
+<text x='74' y='319.3' font-size='12' fill='#6e6e73' text-anchor='end'>0.1</text>
+<line x1='84' y1='194.7' x2='630' y2='194.7' stroke='#e5e5ea'/>
+<text x='74' y='198.7' font-size='12' fill='#6e6e73' text-anchor='end'>1</text>
+<line x1='84' y1='74' x2='630' y2='74' stroke='#e5e5ea'/>
+<text x='74' y='78' font-size='12' fill='#6e6e73' text-anchor='end'>10</text>
+<rect x='84' y='74' width='546' height='362' fill='none' stroke='#c7c7cc'/>
+<text x='357' y='482' font-size='13' fill='#1d1d1f' text-anchor='middle'>Element size h [m]</text>
+<text transform='translate(22 255) rotate(-90)' font-size='13' fill='#1d1d1f' text-anchor='middle'>Max midpoint error [C]</text>
+<polyline fill='none' stroke='#0a84ff' stroke-width='2' points='630.00,182.97 465.64,255.62 301.28,328.27 136.91,400.92 '/>
+<circle cx='630.00' cy='182.97' r='3.5' fill='#fff' stroke='#0a84ff' stroke-width='2'/>
+<circle cx='465.64' cy='255.62' r='3.5' fill='#fff' stroke='#0a84ff' stroke-width='2'/>
+<circle cx='301.28' cy='328.27' r='3.5' fill='#fff' stroke='#0a84ff' stroke-width='2'/>
+<circle cx='136.91' cy='400.92' r='3.5' fill='#fff' stroke='#0a84ff' stroke-width='2'/>
+<line x1='650' y1='84' x2='674' y2='84' stroke='#0a84ff' stroke-width='2'/>
+<text x='682' y='88' font-size='12' fill='#1d1d1f'>Max midpoint error</text>
+<polyline fill='none' stroke='#8e8e93' stroke-width='2' stroke-dasharray='6 4' points='630.00,182.97 465.64,255.62 301.28,328.27 136.91,400.92 '/>
+<line x1='650' y1='108' x2='674' y2='108' stroke='#8e8e93' stroke-width='2' stroke-dasharray='6 4'/>
+<text x='682' y='112' font-size='12' fill='#1d1d1f'>Reference q h^2 / (8k)</text>
+</svg>

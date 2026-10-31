@@ -1,0 +1,25 @@
+2026-10-31T14:11:35.417Z [01_overview.png] Application opened; engine connected | status: Engine ready. Server up 2 ms after launch; UI connected after 7.17 s.
+2026-10-31T14:11:36.333Z console.warning: [.WebGL-0x16ac00191a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+2026-10-31T14:11:36.407Z console.warning: [.WebGL-0x16ac00191a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+2026-10-31T14:11:36.481Z console.warning: [.WebGL-0x16ac00191a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+2026-10-31T14:11:36.521Z console.warning: [.WebGL-0x16ac00191a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+2026-10-31T14:11:37.811Z [02_geometry_example.png] Bundled heat-sink STL loaded | status: Loaded heatsink.stl (example): 96 triangles parsed in 0.9 ms.
+2026-10-31T14:11:38.085Z console.error: Failed to load resource: the server responded with a status of 422 (Unprocessable Content)
+2026-10-31T14:11:39.691Z [03_geometry_rejects_nan.png] Malformed STL (NaN vertex) rejected with line number | status: Could not import nan_vertex.stl: Line 5: Invalid vertex coordinate value 'nan'. Coordinates must be finite decimal numbers (NaN and Inf are rejected).
+2026-10-31T14:11:40.128Z console.error: Failed to load resource: the server responded with a status of 422 (Unprocessable Content)
+2026-10-31T14:11:41.692Z [04_geometry_rejects_binary.png] Binary STL detected and rejected | status: Could not import binary.stl: This looks like a binary STL file. Only ASCII STL is supported: re-export the geometry with the 'ASCII' or 'text' STL option.
+2026-10-31T14:11:42.777Z [05_thermal_profile.png] Mesh study N = 10, 20, 40, 80 solved | status: Solved 4 meshes in 20 ms. Finest mesh N = 80: max midpoint error 0.01953 °C.
+2026-10-31T14:11:43.660Z [06_thermal_error.png] Pointwise error: zero at nodes, q h^2/8k at midpoints | status: Solved 4 meshes in 20 ms. Finest mesh N = 80: max midpoint error 0.01953 °C.
+2026-10-31T14:11:44.768Z [07_thermal_convergence.png] Log-log convergence, slope 2 | status: Solved 4 meshes in 20 ms. Finest mesh N = 80: max midpoint error 0.01953 °C.
+2026-10-31T14:11:45.779Z [08_thermal_validation.png] Invalid conductivity blocked by validation | status: Fix the highlighted parameters before solving.
+2026-10-31T14:11:51.644Z [09_nodal_point_cloud.png] Synthetic nodal CSV as coloured point cloud with legend and node inspection | status: Loaded synthetic_nodal_temperatures.csv: 8,721 nodes parsed in 43.2 ms.
+2026-10-31T14:11:52.280Z console.error: Failed to load resource: the server responded with a status of 422 (Unprocessable Content)
+2026-10-31T14:11:54.323Z [10_nodal_rejects_duplicate.png] Duplicate node_id rejected with line number | status: Could not import nodal_duplicate_id.csv: Line 3: Duplicate node_id 1. Node ids must be unique.
+2026-10-31T14:11:56.816Z [11_performance_running.png] Benchmark running; UI responsive with progress | status: Benchmark running in the C++ engine. The interface stays responsive; you can switch views.
+2026-10-31T14:11:57.956Z [12_performance_cancelled.png] Benchmark cancelled cleanly, no partial results | status: Benchmark cancelled. No partial results were kept.
+2026-10-31T14:12:06.314Z [13_performance_results.png] Benchmark complete with speedup, efficiency and agreement | status: Benchmark finished in 6.3 s. Agreement passed.
+2026-10-31T14:12:08.940Z [14_hardware_connected.png] All three simulated devices connected with telemetry | status: jtag-0 connected after 1 attempt.
+2026-10-31T14:12:09.096Z console.error: Failed to load resource: the server responded with a status of 504 (Gateway Timeout)
+2026-10-31T14:12:10.115Z [15_hardware_timeout.png] Injected telemetry timeout: device faulted | status: [SIMULATED] fpga-0: no response to telemetry request within 250 ms.
+2026-10-31T14:12:11.701Z [16_hardware_recovered.png] Device recovered by reconnect | status: fpga-0 connected after 1 attempt.
+2026-10-31T14:12:12.585Z [17_learning.png] Backprop gradients pass finite-difference check; loss curve | status: Backpropagation computed in C++; all four gradients pass the finite-difference check.
