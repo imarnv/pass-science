@@ -26,6 +26,8 @@ if(MSVC)
     set(WB_WARNINGS /W4 /permissive-)
 else()
     set(WB_WARNINGS -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wno-sign-conversion)
+    # Keep __FILE__ relative so binaries carry no build-machine paths.
+    add_compile_options(-fmacro-prefix-map=${CMAKE_SOURCE_DIR}/=)
 endif()
 
 string(TOUPPER "${CMAKE_BUILD_TYPE}" WB_BUILD_TYPE_UPPER)
@@ -139,8 +141,8 @@ if(WB_BUILD_TESTS)
     )
     target_include_directories(wb_tests PRIVATE src tests)
     target_link_libraries(wb_tests PRIVATE wb_core ${WB_STATIC_LINK_FLAGS})
-    target_compile_definitions(wb_tests PRIVATE WB_TEST_DATA_DIR="${CMAKE_SOURCE_DIR}/tests/data"
-                                                WB_EXAMPLE_DATA_DIR="${CMAKE_SOURCE_DIR}/data")
     target_compile_options(wb_tests PRIVATE ${WB_WARNINGS})
-    add_test(NAME unit_tests COMMAND wb_tests)
+    # Test data is located relative to the working directory (the project or
+    # package root), so no machine-specific path is compiled into the binary.
+    add_test(NAME unit_tests COMMAND wb_tests WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 endif()

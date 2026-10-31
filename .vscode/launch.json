@@ -1,0 +1,27 @@
+{
+  // Run configurations for VS Code / Antigravity (VS Code-based).
+  // Prerequisite: the "C/C++" extension (ms-vscode.cpptools), which provides the
+  // "cppvsdbg" launcher on Windows. Select the configuration in the Run and
+  // Debug view and press F5 (or Ctrl+F5 to run without debugging).
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Workbench: launch packaged app (Launch.exe)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/Launch.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole"
+    },
+    {
+      "name": "Workbench: launch source build (build/package)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/package/Launch.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}/build/package",
+      "console": "internalConsole"
+    }
+  ]
+}

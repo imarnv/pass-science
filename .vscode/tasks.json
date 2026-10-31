@@ -1,0 +1,28 @@
+{
+  // Extension-free alternative: Terminal > Run Task... > "Workbench: run packaged app".
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Workbench: run packaged app",
+      "type": "process",
+      "command": "${workspaceFolder}/Launch.exe",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent", "panel": "dedicated" }
+    },
+    {
+      "label": "Workbench: run unit tests (packaged)",
+      "type": "process",
+      "command": "${workspaceFolder}/tools/wb_tests.exe",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Workbench: configure + build from source",
+      "type": "shell",
+      "command": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && ctest --test-dir build -C Release --output-on-failure",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -10,16 +10,16 @@ using namespace wb::io;
 
 namespace {
 std::string readTestFile(const std::string& name) {
-    std::ifstream in(std::string(WB_TEST_DATA_DIR) + "/" + name, std::ios::binary);
-    if (!in) throw std::runtime_error("missing test data file " + name);
+    std::ifstream in("tests/data/" + name, std::ios::binary);
+    if (!in) throw std::runtime_error("missing tests/data/" + name + " (run wb_tests from the project root)");
     std::ostringstream ss;
     ss << in.rdbuf();
     return ss.str();
 }
 
 std::string readExampleFile(const std::string& name) {
-    std::ifstream in(std::string(WB_EXAMPLE_DATA_DIR) + "/" + name, std::ios::binary);
-    if (!in) throw std::runtime_error("missing example data file " + name);
+    std::ifstream in("data/" + name, std::ios::binary);
+    if (!in) throw std::runtime_error("missing data/" + name + " (run wb_tests from the project root)");
     std::ostringstream ss;
     ss << in.rdbuf();
     return ss.str();
