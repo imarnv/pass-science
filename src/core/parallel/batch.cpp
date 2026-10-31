@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <memory>
 #include <mutex>
 #include <random>
 
@@ -83,33 +84,37 @@ BatchResult runSerial(const std::vector<fea::RodProblem>& cases, const std::atom
     return result;
 }
 
-BatchResult runParallel(const std::vector<fea::RodProblem>& cases, std::size_t workers,
+BatchResult runParallel(const std::vector<fea::RodProblem>& cases, WorkerPool& pool,
                         const std::atomic<bool>* cancel, const ProgressFn& progress) {
     BatchResult result;
     result.temperatures.resize(cases.size());
     std::atomic<std::size_t> completed{0};
 
-    {
-        // Queue capacity of 2 chunks per worker keeps the producer only slightly
-        // ahead of the consumers; submit() blocks when the queue is full.
-        WorkerPool pool(std::max<std::size_t>(1, workers), 2 * std::max<std::size_t>(1, workers));
-        for (std::size_t begin = 0; begin < cases.size(); begin += kChunkSize) {
-            if (cancel && cancel->load(std::memory_order_relaxed)) break;
-            const std::size_t end = std::min(begin + kChunkSize, cases.size());
-            pool.submit([&, begin, end] {
-                for (std::size_t i = begin; i < end; ++i) {
-                    checkCancelled(cancel);
-                    // Each task writes only its own slots: no locking needed.
-                    result.temperatures[i] = solveTemperatures(cases[i]);
-                }
-                const std::size_t done = completed.fetch_add(end - begin) + (end - begin);
-                if (progress) progress(done, cases.size());
-            });
-        }
-        pool.wait(); // rethrows Cancelled (or any solver error) from workers
+    for (std::size_t begin = 0; begin < cases.size(); begin += kChunkSize) {
+        if (cancel && cancel->load(std::memory_order_relaxed)) break;
+        const std::size_t end = std::min(begin + kChunkSize, cases.size());
+        pool.submit([&, begin, end] {
+            for (std::size_t i = begin; i < end; ++i) {
+                checkCancelled(cancel);
+                // Each task writes only its own slots: no locking needed.
+                result.temperatures[i] = solveTemperatures(cases[i]);
+            }
+            const std::size_t done = completed.fetch_add(end - begin) + (end - begin);
+            if (progress) progress(done, cases.size());
+        });
     }
+    pool.wait(); // rethrows Cancelled (or any solver error) from workers
     checkCancelled(cancel);
     return result;
+}
+
+BatchResult runParallel(const std::vector<fea::RodProblem>& cases, std::size_t workers,
+                        const std::atomic<bool>* cancel, const ProgressFn& progress) {
+    // Queue capacity of 2 chunks per worker keeps the producer only slightly
+    // ahead of the consumers; submit() blocks when the queue is full.
+    const std::size_t n = std::max<std::size_t>(1, workers);
+    WorkerPool pool(n, 2 * n);
+    return runParallel(cases, pool, cancel, progress);
 }
 
 double maxAbsDifference(const BatchResult& a, const BatchResult& b) {
@@ -170,6 +175,13 @@ BenchmarkReport runBenchmark(const BenchmarkConfig& config, const std::atomic<bo
 
     BatchResult serialReference;
     for (const Mode& mode : modes) {
+        // One pool per worker count, created before timing and reused for the
+        // warm-up and measured runs: thread start-up is excluded from Tp.
+        std::unique_ptr<WorkerPool> pool;
+        if (mode.name == "parallel") {
+            const auto n = static_cast<std::size_t>(mode.workers);
+            pool = std::make_unique<WorkerPool>(n, 2 * n);
+        }
         TimingRow row;
         row.mode = mode.name;
         row.workers = mode.workers;
@@ -187,7 +199,7 @@ BenchmarkReport runBenchmark(const BenchmarkConfig& config, const std::atomic<bo
             const auto start = std::chrono::steady_clock::now();
             BatchResult result = mode.name == "serial"
                                      ? runSerial(cases, cancel)
-                                     : runParallel(cases, static_cast<std::size_t>(mode.workers), cancel);
+                                     : runParallel(cases, *pool, cancel);
             const auto stop = std::chrono::steady_clock::now();
 
             if (!warmup) row.runSeconds.push_back(std::chrono::duration<double>(stop - start).count());

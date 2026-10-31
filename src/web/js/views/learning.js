@@ -56,7 +56,7 @@ export function initLearning() {
     const last = d.loss[d.loss.length - 1];
     document.getElementById("bp-explain").innerHTML = `
       <p><strong>Direction.</strong> The prediction ŷ = ${fw.yHat.toFixed(4)} is below the target 2, so δ = ŷ − y = ${im.dJ_dyhat.toFixed(4)} is negative and so is every gradient. Gradient descent subtracts η·∂J/∂θ, so all four parameters increase, raising ŷ towards y. The loss falls from ${fw.loss.toFixed(4)} to ${d.updatedLoss.toFixed(4)} after the first update.</p>
-      <p><strong>Over 100 more steps</strong> the loss drops to ${fmt(last, 3)}. The decrease is fast at first and then roughly geometric (a straight line on the log axis): near the minimum the loss is close to quadratic in the parameters, so each step removes a nearly constant fraction of the remaining error. One sample is fitted exactly, so J → 0. This shows the optimiser works; it says nothing about generalisation.</p>`;
+      <p><strong>Over 100 more steps</strong> the loss drops to ${fmt(last, 3)}. The decrease is geometric — a straight line on the log axis: close to the minimum the loss is nearly quadratic in the parameters, so each step removes an almost constant fraction of the remaining error (linear convergence of gradient descent). One sample is fitted exactly, so J → 0. This shows the optimiser works; it says nothing about generalisation.</p>`;
   }
 
   document.getElementById("bp-export-loss").onclick = async () => {

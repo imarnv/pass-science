@@ -140,7 +140,7 @@ function initRodSolver() {
   form.addEventListener("submit", (e) => { e.preventDefault(); solve(); });
   form.addEventListener("input", () => { if (!errorEl.hidden) readForm(); });
   document.getElementById("rod-reset").onclick = () => {
-    for (const [k, v] of Object.entries(DEFAULTS)) form.elements[k].value = v;
+    for (const [k, v] of Object.entries(DEFAULTS)) form.querySelector(`[name="${k}"]`).value = v;
     document.querySelectorAll("#rod-meshes input").forEach((i) => (i.checked = Number(i.value) <= 80));
     readForm();
   };

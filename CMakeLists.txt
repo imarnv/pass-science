@@ -66,6 +66,10 @@ endif()
 # Application: local HTTP transport + static web frontend. On Windows the
 # output is named Launch.exe and built as a GUI-subsystem program (no console).
 # ---------------------------------------------------------------------------
+# The application and its web assets are laid out in build/package/ exactly as
+# in the shipped ZIP (single- and multi-config generators alike).
+set(WB_PACKAGE_DIR ${CMAKE_BINARY_DIR}/package)
+
 add_executable(workbench
     src/server/main.cpp
     src/server/app_server.cpp
@@ -76,6 +80,11 @@ add_executable(workbench
 target_include_directories(workbench PRIVATE src third_party)
 target_link_libraries(workbench PRIVATE wb_core ${WB_STATIC_LINK_FLAGS})
 target_compile_options(workbench PRIVATE ${WB_WARNINGS})
+set_target_properties(workbench PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${WB_PACKAGE_DIR})
+foreach(config Debug Release RelWithDebInfo MinSizeRel)
+    string(TOUPPER ${config} CONFIG_UPPER)
+    set_target_properties(workbench PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CONFIG_UPPER} ${WB_PACKAGE_DIR})
+endforeach()
 
 if(WIN32)
     set_target_properties(workbench PROPERTIES OUTPUT_NAME "Launch" WIN32_EXECUTABLE ON)
@@ -86,11 +95,20 @@ if(WIN32)
     endif()
 endif()
 
-# The web frontend is copied next to the executable so a build tree runs
-# exactly like the packaged application.
-add_custom_command(TARGET workbench POST_BUILD
+# The web frontend (and the bundled examples served by "Load example") is
+# copied next to the executable on every build, so a build tree runs exactly
+# like the packaged application. A separate target keeps the copy current even
+# when only web files changed and the executable did not relink.
+add_custom_target(web_assets ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_SOURCE_DIR}/src/web $<TARGET_FILE_DIR:workbench>/app/web)
+            ${CMAKE_SOURCE_DIR}/src/web ${WB_PACKAGE_DIR}/app/web
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${WB_PACKAGE_DIR}/app/web/examples
+    COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_SOURCE_DIR}/data/heatsink.stl
+            ${CMAKE_SOURCE_DIR}/data/synthetic_nodal_temperatures.csv
+            ${WB_PACKAGE_DIR}/app/web/examples/
+    COMMENT "Copying web frontend and example data")
+add_dependencies(workbench web_assets)
 
 # ---------------------------------------------------------------------------
 # Command-line tool: regenerates results/ (CSV + SVG plots) and example data.

@@ -52,7 +52,14 @@ BatchResult runSerial(const std::vector<fea::RodProblem>& cases,
                       const std::atomic<bool>* cancel = nullptr,
                       const ProgressFn& progress = {});
 
-// `workers` threads pull fixed-size chunks of cases from a bounded queue.
+class WorkerPool;
+
+// The pool's threads pull fixed-size chunks of cases from its bounded queue.
+BatchResult runParallel(const std::vector<fea::RodProblem>& cases, WorkerPool& pool,
+                        const std::atomic<bool>* cancel = nullptr,
+                        const ProgressFn& progress = {});
+
+// Convenience overload: creates a pool of `workers` threads for this call.
 BatchResult runParallel(const std::vector<fea::RodProblem>& cases, std::size_t workers,
                         const std::atomic<bool>* cancel = nullptr,
                         const ProgressFn& progress = {});

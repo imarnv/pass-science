@@ -77,7 +77,8 @@ export function readNumbers(form, rules) {
   const values = {};
   const errors = [];
   for (const [name, rule] of Object.entries(rules)) {
-    const input = form.elements[name];
+    // querySelector, not form.elements[name]: "length" collides with elements.length.
+    const input = form.querySelector(`[name="${name}"]`);
     const raw = input.value.trim();
     const value = Number(raw);
     let problem = "";

@@ -23,13 +23,17 @@ function makeAxis(values, { log = false, includeZero = false, pad = 0 } = {}) {
   if (includeZero && !log) { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
   if (log) {
     const a = Math.floor(Math.log10(lo)), b = Math.ceil(Math.log10(hi));
+    const top = b === a ? a + 1 : b;
+    const stride = Math.max(1, Math.ceil((top - a) / 7)); // at most ~8 labelled decades
     const ticks = [];
-    for (let e = a; e <= (b === a ? a + 1 : b); e++) ticks.push(10 ** e);
-    return { lo: ticks[0], hi: ticks[ticks.length - 1], log, ticks };
+    for (let e = a; e <= top; e += stride) ticks.push(10 ** e);
+    return { lo: 10 ** a, hi: 10 ** top, log, ticks };
   }
   if (hi === lo) { hi += Math.abs(hi) * 0.1 || 1; lo -= Math.abs(lo) * 0.1 || 1; }
   const span = hi - lo;
+  const nonNegative = lo >= 0;
   lo -= span * pad; hi += span * pad;
+  if (nonNegative) lo = Math.max(lo, 0); // never pad a non-negative quantity below zero
   const step = niceStep(hi - lo, 5);
   lo = Math.floor(lo / step + 1e-9) * step;
   hi = Math.ceil(hi / step - 1e-9) * step;
