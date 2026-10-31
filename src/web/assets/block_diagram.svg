@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Helvetica, Arial, sans-serif">
+  <title>Workbench integration block diagram</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10z" fill="#3a3a3c"/>
+    </marker>
+    <style>
+      .box { fill: #f5f5f7; stroke: #86868b; stroke-width: 1.2; }
+      .host { fill: #e8f1fc; stroke: #0071e3; }
+      .domain33 { fill: #eaf6ec; stroke: #248a3d; }
+      .domain10 { fill: #fdf1e3; stroke: #b25000; }
+      .probe { fill: #f3ecfb; stroke: #8944ab; }
+      .t { font-size: 15px; font-weight: 600; fill: #1d1d1f; }
+      .s { font-size: 12px; fill: #424245; }
+      .l { font-size: 11.5px; fill: #1d1d1f; }
+      .usb { stroke: #0071e3; stroke-width: 2.4; fill: none; }
+      .jtag { stroke: #8944ab; stroke-width: 2.4; fill: none; }
+      .sig { stroke: #248a3d; stroke-width: 2; fill: none; stroke-dasharray: 6 4; }
+      .gnd { stroke: #3a3a3c; stroke-width: 1.4; fill: none; stroke-dasharray: 2 3; }
+    </style>
+  </defs>
+  <rect width="1200" height="560" fill="#ffffff"/>
+
+  <!-- Host -->
+  <rect class="box host" x="30" y="190" width="230" height="170" rx="14"/>
+  <text class="t" x="48" y="220">Host PC (Windows 11)</text>
+  <text class="s" x="48" y="244">Workbench engine (C++17)</text>
+  <text class="s" x="48" y="262">IDeviceAdapter per device:</text>
+  <text class="s" x="48" y="280">  McuAdapter · FpgaAdapter</text>
+  <text class="s" x="48" y="298">  JtagAdapter (debug only)</text>
+  <text class="s" x="48" y="322">Powered USB 2.0 hub, 5 V / 2.5 A</text>
+  <text class="s" x="48" y="340">Single ground reference: hub GND</text>
+
+  <!-- MCU -->
+  <rect class="box domain33" x="420" y="30" width="300" height="150" rx="14"/>
+  <text class="t" x="438" y="58">Microcontroller board</text>
+  <text class="s" x="438" y="80">STM32 Nucleo-64 class, Cortex-M4F</text>
+  <text class="s" x="438" y="100">On-board ST-LINK: USB CDC (UART 115200 8N1)</text>
+  <text class="s" x="438" y="120">5 V from USB → 3.3 V LDO, I/O 3.3 V</text>
+  <text class="s" x="438" y="140">Debug: on-board SWD (owned by ST-LINK)</text>
+  <text class="s" x="438" y="160">Telemetry: newline-delimited JSON</text>
+
+  <!-- FPGA -->
+  <rect class="box domain33" x="420" y="210" width="300" height="190" rx="14"/>
+  <text class="t" x="438" y="238">FPGA board</text>
+  <text class="s" x="438" y="260">Arty A7-35T class (Artix-7 XC7A35T)</text>
+  <text class="s" x="438" y="280">USB-UART bridge (FTDI ch. B), 921600 8N1</text>
+  <text class="s" x="438" y="300">Rails: VCCINT 1.0 V · VCCAUX 1.8 V</text>
+  <text class="s" x="438" y="320">User I/O banks VCCO = 3.3 V (Pmod)</text>
+  <text class="s" x="438" y="340">External 6-pin JTAG header, VREF = 3.3 V</text>
+  <rect class="box domain10" x="600" y="352" width="104" height="36" rx="8"/>
+  <text class="s" x="610" y="375">Core 1.0 V domain</text>
+
+  <!-- JTAG -->
+  <rect class="box probe" x="420" y="430" width="300" height="110" rx="14"/>
+  <text class="t" x="438" y="458">JTAG debug adapter</text>
+  <text class="s" x="438" y="480">FT2232H MPSSE probe, USB 2.0 HS</text>
+  <text class="s" x="438" y="500">Buffers powered from target VREF (1.2–3.6 V)</text>
+  <text class="s" x="438" y="520">Does not power the target; not a compute board</text>
+
+  <!-- USB links -->
+  <path class="usb" d="M260 230 C340 230 340 105 420 105" marker-end="url(#arrow)"/>
+  <path class="usb" d="M260 275 L420 290" marker-end="url(#arrow)"/>
+  <path class="usb" d="M260 320 C340 320 340 485 420 485" marker-end="url(#arrow)"/>
+  <text class="l" x="290" y="150">USB #1 · CDC-ACM</text>
+  <text class="l" x="300" y="270">USB #2 · UART bridge</text>
+  <text class="l" x="282" y="440">USB #3 · vendor bulk</text>
+
+  <!-- JTAG cable -->
+  <path class="jtag" d="M720 485 C800 485 800 340 722 340" marker-end="url(#arrow)"/>
+  <text class="l" x="790" y="400">6-pin JTAG cable</text>
+  <text class="l" x="790" y="416">TCK TMS TDI → · ← TDO</text>
+  <text class="l" x="790" y="432">VREF sense · GND</text>
+
+  <!-- MCU to FPGA optional link -->
+  <path class="sig" d="M650 180 L650 210"/>
+  <text class="l" x="660" y="200">optional UART/SPI, 3.3 V ↔ 3.3 V, 100 Ω series</text>
+
+  <!-- Legend -->
+  <rect x="880" y="30" width="290" height="250" rx="14" fill="#fbfbfd" stroke="#d2d2d7"/>
+  <text class="t" x="898" y="58">Legend and rules</text>
+  <line class="usb" x1="898" y1="82" x2="940" y2="82"/><text class="s" x="950" y="86">USB data + 5 V (host side)</text>
+  <line class="jtag" x1="898" y1="106" x2="940" y2="106"/><text class="s" x="950" y="110">JTAG, owned by the probe</text>
+  <line class="sig" x1="898" y1="130" x2="940" y2="130"/><text class="s" x="950" y="134">Board-to-board logic</text>
+  <rect class="box domain33" x="898" y="146" width="20" height="14" rx="3"/><text class="s" x="928" y="158">3.3 V I/O domain</text>
+  <rect class="box domain10" x="898" y="168" width="20" height="14" rx="3"/><text class="s" x="928" y="180">1.0 V core (never on a pin)</text>
+  <text class="s" x="898" y="210">• One JTAG master per chain at a time.</text>
+  <text class="s" x="898" y="228">• Probe I/O follows target VREF;</text>
+  <text class="s" x="898" y="244">  other levels need a translator.</text>
+  <text class="s" x="898" y="262">• All grounds joined at the USB hub.</text>
+
+  <rect x="880" y="300" width="290" height="110" rx="14" fill="#fff4e5" stroke="#b25000"/>
+  <text class="t" x="898" y="328">Simulated in this build</text>
+  <text class="s" x="898" y="350">Mock adapters replace all three devices.</text>
+  <text class="s" x="898" y="368">Ports, IDCODE and telemetry are generated;</text>
+  <text class="s" x="898" y="386">no USB or serial port is opened.</text>
+</svg>
