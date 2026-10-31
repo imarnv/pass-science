@@ -1,0 +1,18 @@
+# Build trees and packaging output
+/build*/
+/dist/
+/out/
+CMakeUserPresets.json
+
+# Runtime logs written next to the executable
+/logs/
+*.log
+
+# Editor / OS clutter (shared run configurations in .vscode are kept)
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
