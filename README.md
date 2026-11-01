@@ -11,7 +11,7 @@ A small engineering workbench with one interface and a C++17 engine. It:
 All numerical work, file parsing and concurrency are in C++. The interface is plain HTML/CSS/JavaScript, served locally by the C++ program and shown in its own window.
 
 > Submission for the PASS Science Works R&D Internship 2026–27 common assignment.
-> Candidate: **Arnav Mehta** · Reg. no. **RA2311056010137** · Actual effort: **≈ 40 hours** (of the 48-hour window)
+> Candidate: **Arnav Mehta** · Reg. no. **RA2311056010137** · Actual effort: **32 hours**
 
 ---
 

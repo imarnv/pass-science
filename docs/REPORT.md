@@ -1,6 +1,6 @@
 # Engineering Workbench — Report
 
-*Candidate: Arnav Mehta · Reg. no. RA2311056010137 · Effort ≈ 40 hours · Handwritten appendix: `docs/handwritten/`*
+*Candidate: Arnav Mehta · Reg. no. RA2311056010137 · Effort: 32 hours · Handwritten appendix: `docs/handwritten/`*
 
 ## 1. Design choices
 
