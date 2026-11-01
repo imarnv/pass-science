@@ -16,3 +16,6 @@ CMakeUserPresets.json
 .idea/
 .DS_Store
 Thumbs.db
+
+# The submission ZIP is committed on purpose (download link for the form)
+!/submission/
