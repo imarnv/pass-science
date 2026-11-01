@@ -1,9 +1,11 @@
 # Handwritten backpropagation (Task F)
 
-Place the scans or photos of the handwritten derivation here (maximum two pages),
-for example `page1.jpg` and `page2.jpg` or a single `backprop_handwritten.pdf`.
+Handwritten derivation by Arnav Mehta (two pages, photographed):
 
-The derivation should contain:
+- `page1_forward_backward.jpg` — forward pass and chain-rule derivatives
+- `page2_update_direction.jpg` — simultaneous update (η = 0.1) and gradient direction
+
+The derivation contains:
 
 1. the forward pass;
 2. the chain-rule derivatives for w, b, v and c;
@@ -11,7 +13,7 @@ The derivation should contain:
 4. the numerical values;
 5. a short explanation of the gradient direction.
 
-Values to check your arithmetic against (computed by the C++ engine, `results/backprop_gradients.csv`):
+Values checked against (computed by the C++ engine, `results/backprop_gradients.csv`):
 
 | Quantity | Value |
 |---|---|

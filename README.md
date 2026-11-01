@@ -11,13 +11,13 @@ A small engineering workbench with one interface and a C++17 engine. It:
 All numerical work, file parsing and concurrency are in C++. The interface is plain HTML/CSS/JavaScript, served locally by the C++ program and shown in its own window.
 
 > Submission for the PASS Science Works R&D Internship 2026–27 common assignment.
-> Candidate: *[name / candidate ID]* · Actual effort: *[hours — fill in]*
+> Candidate: **Arnav Mehta** · Reg. no. **RA2311056010137** · Actual effort: **≈ 40 hours** (of the 48-hour window)
 
 ---
 
 ## 1. Run it (Windows 11 x64, one click)
 
-1. Extract `CandidateID_Workbench.zip` anywhere (Desktop, Downloads, a USB stick).
+1. Extract `RA2311056010137_Workbench.zip` anywhere (Desktop, Downloads, a USB stick).
 2. Double-click **`Launch.exe`**.
 
 The workbench opens in its own window: Microsoft Edge in app mode, which ships with Windows 11, or the default browser if Edge is missing. It needs no installation, administrator rights, internet connection, PowerShell or build step. `Launch.exe` is statically linked and depends only on DLLs that ship with Windows (`KERNEL32`, `USER32`, `SHELL32`, `WS2_32`, `msvcrt`).

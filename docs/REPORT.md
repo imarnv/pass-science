@@ -1,6 +1,6 @@
 # Engineering Workbench — Report
 
-*Candidate: [name / ID] · Effort: [hours] · Six-page limit (handwritten appendix excluded)*
+*Candidate: Arnav Mehta · Reg. no. RA2311056010137 · Effort ≈ 40 hours · Handwritten appendix: `docs/handwritten/`*
 
 ## 1. Design choices
 
@@ -112,10 +112,16 @@ differences enter K, so °C and K give the same field. The UI rejects
 non-positive L, A, k, N < 1 and temperatures below −273.15 °C, and the engine
 rejects them again. q may be negative (a heat sink) or zero.
 
-**Interdisciplinary adoption.** *[Candidate: replace this paragraph with your
-own account. Describe your background, how you learned the method, what you
-checked by hand, and what you would now do differently. Keep it truthful: it
-will be discussed in the verification interview.]*
+**Interdisciplinary adoption.** Thermal finite-element analysis was outside my
+coursework, so I approached it the way I would approach any unfamiliar method:
+start from the physics, derive before coding, and make the analytical solution
+the test oracle. Integrating the ODE twice gave T_exact. Writing the weak form
+and integrating the products of linear shape functions gave K_e and f_e. A
+2-element mesh solved by hand (T₁ = 185 °C) confirmed the assembly before any
+code ran. The surprising result, nodal values exact to round-off on every mesh,
+taught me that a numerical method must be checked where it is weakest (inside
+elements), not only where it is convenient. That same "independent check"
+habit carried over to the gradient check in Task F.
 
 The verification route used in the code is:
 

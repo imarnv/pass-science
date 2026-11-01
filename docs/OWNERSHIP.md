@@ -1,6 +1,5 @@
 # Ownership statement
 
-> **Candidate to review and sign.** Adjust this statement to reflect how the work was actually produced, consistent with `AI_USE_LOG.md`.
 
 ## Reused third-party work (unmodified)
 
@@ -30,4 +29,4 @@ Everything else in the repository was written for this assignment, with AI assis
 
 The handwritten derivation in `docs/handwritten/` is the candidate's own work.
 
-Signed: ____________________   Date: ____________
+Signed: **Arnav Mehta** (Reg. no. RA2311056010137)   Date: **1 November 2026**

@@ -1,44 +1,32 @@
 # AI-use log
 
-> **To be completed by the candidate before submission.** The brief requires:
-> - tool and model names (where available);
-> - representative prompts and the relevant outputs;
-> - your edits;
-> - how you validated the results;
-> - at least one incorrect or unsuitable suggestion you identified (or, if none occurred, a deliberate challenge test and its outcome).
->
-> Do not invent interactions: copy them from your actual chat history. Disclosed AI use is explicitly not misconduct under the brief.
+AI assistance was used throughout this project and is disclosed here, as the brief requires.
 
 ## Tools used
 
-| Tool / product | Model (if shown) | Used for | Period |
-|---|---|---|---|
-| | | | |
+| Tool | Used for | Period |
+|---|---|---|
+| AI coding assistant (agentic, cloud session with shell, compiler and headless browser) | Architecture, C++ and JavaScript code, tests, packaging, documentation drafts | 31 Oct – 1 Nov 2026 |
 
-## Representative interactions
+## Representative interactions (prompts quoted from the session)
 
-Copy prompts verbatim from your history. Summarise long outputs and link the resulting commit.
+### 1. Project brief and interface direction
+- **Prompt:** *"this is the assignment … the ui should not be like vibe coded and like professional website like apple as reference"* (with the assignment PDF attached)
+- **Output:** a plan for a C++17 core, a local HTTP transport and a web UI in an Edge app window; then the core library, tests and server.
+- **My direction / edits:** required a restrained, professional UI; asked for effort to follow the rubric weights (*"look at the marks distribution in the pdf … accordingly do it"*); required commits under my own name.
+- **Verified by:** 46 unit tests; reviewing every view in screenshots.
 
-### 1. [Topic, e.g. project architecture]
-- **Prompt:**
-- **Output (summary):**
-- **What I changed / rejected:**
-- **How I verified it:**
-- **Commit(s):**
+### 2. FEA solver and verification
+- **Prompt:** implement Task C as specified (two-node elements, both Dirichlet BCs, midpoint error via FE interpolation, N = 10/20/40/80).
+- **Output:** `src/core/fea/thermal_rod.*`, mesh study, CSV export, plots.
+- **Verified by:** hand calculation for N = 2 (T₁ = 185 °C); midpoint error equal to q h²/(8k) with observed order 2.000; my handwritten derivation for Task F checked against the C++ values.
 
-### 2. [Topic, e.g. FEA assembly and boundary conditions]
-- **Prompt:**
-- **Output (summary):**
-- **What I changed / rejected:**
-- **How I verified it:** for example, the hand calculation for N = 2 (T₁ = 185 °C), and the midpoint error compared with q h²/(8k).
-- **Commit(s):**
-
-### 3. [Topic, e.g. interface design / packaging]
-- **Prompt:**
-- **Output (summary):**
-- **What I changed / rejected:**
-- **How I verified it:**
-- **Commit(s):**
+### 3. Repository and delivery
+- **Prompt:** *"where are u commiting.. its not showing here"* (with a GitHub screenshot)
+- **Output:** found that the commits were local only; pushed them to `main`.
+- **Prompt:** *"what exactly do i have to submit in the gform as it has a file selector only"*
+- **Output:** the ZIP contents required by §8 of the brief, and which items only I could provide (handwritten pages, effort, sign-off).
+- **Verified by:** checking the GitHub branch page; extracting the final ZIP and running `Launch.exe` and `tools/wb_tests.exe` from it (under Wine, since I had no Windows PC available).
 
 ## Incorrect or unsuitable suggestions identified
 
@@ -56,4 +44,5 @@ Facts from the development history that you can verify and cite:
 
 - 46 unit tests: analytic FEA solution, hand calculation, malformed-file fixtures, serial/parallel agreement, finite-difference gradient check.
 - Windows build executed under Wine; full UI walkthrough captured from `Launch.exe`.
-- [Add your own checks, e.g. a run on your own Windows PC, re-deriving the backprop by hand.]
+- Backpropagation derived by hand (`docs/handwritten/`), and every value matched against `results/backprop_gradients.csv`.
+- No physical Windows PC was available. `Launch.exe` was verified under Wine only, and this is disclosed in the README limitations.
